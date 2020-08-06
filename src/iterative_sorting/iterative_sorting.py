@@ -46,10 +46,25 @@ Once we know exactly how many times each piece of data in the input set
 showed up, we can construct a sorted set of the input data from the 
 buckets. 
 
-What is the time and space complexity of the counting sort algorithm?
+What is the time and space complexity of the counting sort algorithm? Bad
 '''
 def counting_sort(arr, maximum=None):
     # Your code here
+    buckets = []
+    if maximum:
+        buckets = [0 for x in range(maximum + 1)]
 
+    for val in arr:
+        buckets[val] += 1
 
-    return arr
+    for i in range(len(buckets) - 1):
+        buckets[i + 1] += buckets[i]
+
+    new_arr = [None for x in range(len(arr))];
+    for x in arr:
+        buckets[x] -= 1
+        new_arr[buckets[x]] = x
+
+    return new_arr
+
+counting_sort([1,2,3,4,2,2,1,5], 5);
