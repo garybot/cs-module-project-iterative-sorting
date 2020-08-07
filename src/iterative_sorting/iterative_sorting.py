@@ -21,9 +21,10 @@ def selection_sort(arr):
 def bubble_sort(arr):
     swapped = True
     cur_index = 0
+    last_sorted = 1
     while swapped:
         swapped = False
-        for i in range(len(arr) - 1):
+        for i in range(len(arr) - last_sorted):
             if arr[i] > arr[i + 1]:
                 arr[i], arr[i + 1] = arr[i + 1], arr[i]
                 swapped = True
