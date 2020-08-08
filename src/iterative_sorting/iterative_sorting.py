@@ -4,21 +4,31 @@ def selection_sort(arr):
     for i in range(0, len(arr) - 1):
         cur_index = i
         smallest_index = cur_index
-        # TO-DO: find next smallest element
-        # (hint, can do in 3 loc)
-        # Your code here
-
-
-        # TO-DO: swap
-        # Your code here
+        # find next smallest element
+        for j in range(cur_index, len(arr)):
+            if arr[j] < arr[smallest_index]:
+                smallest_index = j
+        # swap
+        arr[cur_index], arr[smallest_index]  = arr[smallest_index], arr[cur_index]
+        # increment
+        cur_index += 1
+        smallest_index = cur_index
 
     return arr
 
 
 # TO-DO:  implement the Bubble Sort function below
 def bubble_sort(arr):
-    # Your code here
-
+    swapped = True
+    cur_index = 0
+    last_sorted = 1
+    while swapped:
+        swapped = False
+        for i in range(len(arr) - last_sorted):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        cur_index += 1
 
     return arr
 
@@ -37,10 +47,30 @@ Once we know exactly how many times each piece of data in the input set
 showed up, we can construct a sorted set of the input data from the 
 buckets. 
 
-What is the time and space complexity of the counting sort algorithm?
+What is the time and space complexity of the counting sort algorithm? O(n+k)??
 '''
 def counting_sort(arr, maximum=None):
-    # Your code here
+    if len(arr) == 0:
+        return arr
+    elif maximum is None:
+        return "Must include a maximum"
+    elif min(arr) < 0:
+        return "Error, negative numbers not allowed in Count Sort"
+    else: 
+        count = [0 for x in range(maximum + 1)]
 
+        for val in arr:
+            count[val] += 1
 
-    return arr
+        for i in range(1, len(count)):
+            count[i] += count[i - 1]
+
+        new_arr = [None for x in range(len(arr))];
+        
+        for x in arr:
+            count[x] -= 1
+            new_arr[count[x]] = x
+
+        return new_arr
+
+counting_sort([1,2,3,4,2,2,1,5], 5);
